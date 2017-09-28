@@ -21,7 +21,11 @@ search: true
 
 한국어음중개 API 문서에 오신 것을 환경합니다.
 
-KROSS API의 정식 서비스는 10월 30일로 예정되어 있으며, 10월 13일부터 테스트사이트[http://testapi1.kross.kr/](http://testapi1.kross.kr)를 통해 테스트 가능합니다.
+KROSS API의 정식 서비스는 10월 30일로 예정되어 있으며, 10월 13일부터 테스트 URL [http://testapi1.kross.kr/](http://testapi1.kross.kr)를 통해 테스트 가능합니다.
+
+정식 서비스시 API URL은 다음과 같습니다.
+
+- API URL: [http://api1.kross.kr/](http://api1.kross.kr/)
 
 # 인증
 
@@ -35,7 +39,7 @@ curl "https://api1.kross.kr/"
 
 > `e71829c351aa4242c2719cbfbe671c09`는 인증을 위해 발부받은 API 키로 대체해야 합니다.
 
-KROSS API 는 접근을 위해 당사에서 발급되는 토큰을 발부받아야 합니다. API 이용을 위한 문의는 mailto:kross@kross.kr 으로 연락주세요. [나인티데이즈 사이트](http://90days.kr/)에서 문의를 주셔도 됩니다.
+KROSS API 는 접근을 위해 당사에서 발급되는 토큰을 발부받아야 합니다. API 이용을 위한 문의는 kross@kross.kr 으로 연락주세요. [나인티데이즈 사이트](http://90days.kr/)에서 문의를 주셔도 됩니다.
 인증토큰은 보통 아래와 같은 형식을 가집니다.
 
 `Authorization: e71829c351aa4242c2719cbfbe671c09`
@@ -63,15 +67,11 @@ curl "http://api1.kross.kr/preview/8498600603"
 ```json
 {
   "request_id": 2,
-  "yield": ["8498600603", 8.451, 10.102]
+  "yield": ["8498600603", 8.451, 10.102, "a4242c2719cb"]
 }
 ```
 
 발행사별 할인율 조회.
-
-<aside class="info">
-조회할 발행사가 2개 이상이라면 아래의 할인율 일괄조회가 더 유리합니다.
-</aside>
 
 
 ### HTTP Request GET
@@ -89,8 +89,11 @@ Parameter | Default | Description
 Property | Description
 --------- | -----------
 request_id | 요청 ID. 증분식(incremental)
-yield | 할인율. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율)
+yield | 할인율. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key)
 
+<aside class="info">
+조회할 발행사가 2개 이상이라면 아래의 할인율 일괄조회가 더 유리합니다.
+</aside>
 
 ## 할인율 일괄조회
 
@@ -109,8 +112,8 @@ curl "http://api1.kross.kr/preview_yields"
   "owner": "6088107131",
   "yields": {
     [
-      ["849-86-00603", 8.451, 10.102],
-      ["435-86-00710", 9.989, 12.014]
+      ["849-86-00603", 8.451, 10.102, "a4242c2719cb"],
+      ["435-86-00710", 9.989, 12.014, "7bce93e17bca"]
     ]
   }
 }
@@ -136,7 +139,7 @@ publishers | 조회할 발행사 사업자번호들 (array)
 Property | Description
 --------- | -----------
 owner | 어음소지자 사업자번호
-yields | 발행사별 할인율. array. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율)
+yields | 발행사별 할인율. array. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key)
 
 
 
