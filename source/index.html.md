@@ -1,15 +1,12 @@
 ---
-title: API Reference
+title: KROSS API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
-  - shell
-  - ruby
-  - python
-  - javascript
+  - shell(cURL)
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
+  - <a href='http://90days.kr'>for 90days Services</a>
 
 includes:
   - errors
@@ -17,223 +14,100 @@ includes:
 search: true
 ---
 
-# Introduction
+# KROSS API 소개
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+한국어음중개 API 문서에 오신 것을 환경합니다. 이 API는 한국어음중개와 협의된 기관 및 사용자가 접근할 수 있으며, 모든 정보의 지적재산권과 소유권은 한국어음중개에 있음을 공지합니다.
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+KROSS API의 정식 서비스는 10월 30일로 예정되어 있으며, 10월 13일부터 테스트사이트[http://testapi1.kross.kr/](http://testapi1.kross.kr)를 통해 테스트 가능합니다.
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+# 인증
 
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
+> 인증을 위해 아래 코드를 이용하세요.
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
+curl "https://api1.kross.kr/"
   -H "Authorization: meowmeowmeow"
 ```
 
-```javascript
-const kittn = require('kittn');
+> `meowmeowmeow`는 인증을 위해 발부받은 API 키로 대체해야 합니다.
 
-let api = kittn.authorize('meowmeowmeow');
-```
-
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
+KROSS API 는 접근을 위해 당사에서 발급되는 토큰을 발부받아야 합니다. API 이용을 위한 문의는 mailto:kross@kross.kr 으로 연락주세요. [나인티데이즈 사이트](http://90days.kr/)에서 문의를 주셔도 됩니다.
+인증토큰은 보통 아래와 같은 형식을 가집니다.
 
 `Authorization: meowmeowmeow`
 
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+<aside class="warning">
+토큰 <code>&lt;meowmeowmeow&gt;</code>은 당사에서 발부한 토큰으로 대체해서 사용해야합니다. 
 </aside>
 
-# Kittens
+# API
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## 발행사별 할인율 조회 (미리보기)
 
 ```shell
-curl "http://example.com/api/kittens"
+curl "http://api1.kross.kr/preview/8498600603"
   -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
+{
+  "request_id": 2,
+  "yield": ["8498600603", 8.451, 10.102]
+}
 ```
 
 This endpoint retrieves all kittens.
 
 ### HTTP Request
 
-`GET http://example.com/api/kittens`
+`GET http://api1.kross.kr/preview/<발행사사업자번호>`
 
 ### Query Parameters
 
 Parameter | Default | Description
 --------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
+발행사사업자번호 | None | 조회할 발행사 사업자번호를 입력. 대시를 포함시키는 것은 옵션이다. `849-86-00603` 과 `8498600603` 은 모두 동일함.
 
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
 
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+## 발행사들에 대한 할인율 일괄조회
 
 ```shell
-curl "http://example.com/api/kittens/2"
+curl "http://api1.kross.kr/preview_yields"
+  -X POST
   -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+  -H "Content-Type: application/json"
+  -d '{"owner":"6088107131", "publishers":["8498600603","4358600710"]}'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+  "owner": "6088107131",
+  "yields": {
+    [
+      ["849-86-00603", 8.451, 10.102],
+      ["435-86-00710", 9.989, 12.014]
+    ]
+  }
 }
 ```
 
 This endpoint retrieves a specific kitten.
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
+`POST http://api1.kross.kr/preview_yields`
 
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -X DELETE
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint retrieves a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
+### JSON Parameters
 
 Parameter | Description
 --------- | -----------
-ID | The ID of the kitten to delete
+owner | 어음 소지인 사업자번호
+publishers | 조회할 발행사 사업자번호들 (array)
+
 
