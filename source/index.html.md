@@ -9,6 +9,7 @@ toc_footers:
   - <a href='http://90days.kr'>for 90days Services</a>
 
 includes:
+  - inbound_links
   - errors
 
 search: true
@@ -37,9 +38,14 @@ KROSS API 는 접근을 위해 당사에서 발급되는 토큰을 발부받아�
 
 `Authorization: meowmeowmeow`
 
-<aside class="warning">
+<aside class="success">
 토큰 <code>&lt;meowmeowmeow&gt;</code>은 당사에서 발부한 토큰으로 대체해서 사용해야합니다. 
 </aside>
+
+<aside class="warning">
+인증방식은 곧 JWT형식(Bearer)으로 변경될 예정이며, 변경 즉시 가입기관에게 공지될 예정입니다. 신규기관이라면 JWT형식의 인증을 대비해주시기 바랍니다.
+</aside>
+
 
 # API
 
