@@ -74,7 +74,7 @@ curl "http://api1.kross.kr/preview/8498600603"
 </aside>
 
 
-### HTTP Request
+### HTTP Request GET
 
 `GET http://api1.kross.kr/preview/<발행사사업자번호>`.
 
@@ -119,7 +119,7 @@ curl "http://api1.kross.kr/preview_yields"
 발행사별 할인율 일괄조회.
 
 
-### HTTP Request
+### HTTP Request POST
 
 `POST http://api1.kross.kr/preview_yields`
 
