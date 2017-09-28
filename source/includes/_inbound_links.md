@@ -1,11 +1,19 @@
-# Links
+# Referrer Links
 
 소지한 어음할인의뢰시 외부에서 사용할 링크는 아래의 규칙을 가집니다.
 
 ### Link URL
 
-`http://90days.kr/inb/<소지인 사업자번호>/<발행사 사업자번호>?referrer_key=42c2719cbf`
+`http://90days.kr/inb/<소지인 사업자번호>/<발행사 사업자번호>?referrer_key=<referrer_key>`
 
+> 링크 예제
+
+```
+  http://90days.kr/inb/4358600710/8498600603?referrer_key=42c2719cbf
+```
+
+> 상기 링크는 사업자(4358600710)가 소지한 어음(발행사업자 8498600603)을 브라우저를 통해 나인티데이즈 어음할인의뢰 프로세스로 이동하는 경우입니다.
+> (조회시 받았던 참조키는 `42c2719cbf`)
 
 ### URL Parameters
 
