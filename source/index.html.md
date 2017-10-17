@@ -33,7 +33,7 @@ KROSS API의 정식 서비스는 10월 30일로 예정되어 있으며, 10월 13
 
 ```shell
 # With shell, you can just pass the correct header with each request
-curl "https://api1.kross.kr/"
+curl "http://api1.kross.kr/"
   -H "Authorization: e71829c351aa4242c2719cbfbe671c09"
 ```
 
@@ -112,8 +112,8 @@ curl "http://api1.kross.kr/preview_yields"
   "owner": "6088107131",
   "yields": {
     [
-      ["8498600603", 8.451, 10.102, "a4242c2719cb"],
-      ["4358600710", 9.989, 12.014, "7bce93e17bca"]
+      ["8498600603", 8.451, 10.102, "a4242c2719cb", "http://90days.kr/inb/6088107131?referrer_key=8498600603"],
+      ["4358600710", 9.989, 12.014, "7bce93e17bca", "http://90days.kr/inb/6088107131?referrer_key=4358600710"]
     ]
   }
 }
@@ -139,7 +139,7 @@ publishers | 조회할 발행사 사업자번호들 (array)
 Property | Description
 --------- | -----------
 owner | 어음소지자 사업자번호
-yields | 발행사별 할인율. array. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key)
+yields | 발행사별 할인율. array. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key, 4:할인의뢰Link)
 
 
 
