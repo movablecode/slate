@@ -86,19 +86,19 @@ curl "http://api1.kross.kr/preview/8498600603"
 
 ### Query Parameters
 
-Parameter | Default | Description
+Parameter | Description | Type
 --------- | ------- | -----------
-발행사사업자번호 | None | 조회할 발행사 사업자번호를 입력. 대시를 포함시키는 것은 옵션이다. `849-86-00603` 과 `8498600603` 은 모두 동일함.
+발행사사업자번호 | 조회할 발행사 사업자번호를 입력. 대시를 포함시키는 것은 옵션이다. `849-86-00603` 과 `8498600603` 은 모두 동일함. | string
 
 ### Output Structures
 
-Property | Description
---------- | -----------
-request_id | 요청 ID. 증분식(incremental)
-bizno | 사업자번호
-name | 사명
-grade | 나인티데이즈 등급
-yield | 할인율 범위. index(0:최소할인율, 1:최대할인율)
+Property | Description | Type
+--------- | ----------- | ------
+request_id | 요청 ID. 증분식(incremental) | integer
+bizno | 사업자번호 | string
+name | 사명 | string
+grade | 나인티데이즈 등급 | string
+yield | 할인율 범위. index(0:최소할인율, 1:최대할인율) | array of double
 
 
 <aside class="info">
@@ -188,28 +188,28 @@ curl "http://api1.kross.kr/preview_yields"
 
 ### JSON Parameters
 
-Parameter | Description
---------- | -----------
-owner | 어음 소지인 사업자번호
-publishers | 조회할 발행사 어음정보들 (array)
-publishers.bizno | 발행사 사업자번호
-publishers.amount | 어음 발행 금액
-publishers.ex_date | 어음만기일 ex) "2017-10-30"
+Parameter | Description | Type
+--------- | ----------- | -------
+owner | 어음 소지인 사업자번호 | string
+publishers | 조회할 발행사 어음정보들 (array) | array of object
+publishers.bizno | 발행사 사업자번호 | string
+publishers.amount | 어음 발행 금액 | double
+publishers.ex_date | 어음만기일 ex) "2017-10-30" | string
 
 
 ### Output Structures
 
-Property | Description
---------- | -----------
-owner | 어음소지자 사업자번호
-publishers | 조회한 발행사 어음정보들 (array)
-output | 조회 결과
-output.bizno | 사업자번호
-output.remain_days | 잔존일수
-output.bizno | KROSS 평가등급
-output.yield | 할인율 범위 (0:최소할인율, 1:최대할인율)
-output.discount_amount | 할인금액 범위 (0:최소할인금액, 1:최대할인금액)
-output.referrer_key | Referrer_Key
-output.link | 할인의뢰 Link URL
+Property | Description | Type
+--------- | ----------- | -------
+owner | 어음소지자 사업자번호 | string
+publishers | 조회한 발행사 어음정보들 | array of object
+output | 조회 결과 | array of object
+output.bizno | 사업자번호 | string
+output.remain_days | 잔존일수 | integer
+output.bizno | KROSS 평가등급 | string
+output.yield | 할인율 범위 (0:최소할인율, 1:최대할인율) | array of double
+output.discount_amount | 할인금액 범위 (0:최소할인금액, 1:최대할인금액) | array of double
+output.referrer_key | Referrer_Key | string
+output.link | 할인의뢰 Link URL | string
 
 
