@@ -21,7 +21,7 @@ search: true
 
 한국어음중개 API 문서에 오신 것을 환경합니다.
 
-KROSS API의 정식 서비스는 10월 30일로 예정되어 있으며, 10월 13일부터 테스트 URL [http://testapi1.kross.kr/](http://testapi1.kross.kr)를 통해 테스트 가능합니다.
+KROSS API의 정식 서비스는 10월 31일로 예정되어 있으며, 10월 13일부터 테스트 URL [http://testapi1.kross.kr/](http://testapi1.kross.kr)를 통해 테스트 가능합니다.
 
 정식 서비스시 API URL은 다음과 같습니다.
 
@@ -66,8 +66,14 @@ curl "http://api1.kross.kr/preview/8498600603"
 
 ```json
 {
-  "request_id": 2,
-  "yield": ["8498600603", 8.451, 10.102, "a4242c2719cb"]
+  "yield": [
+    11.05148013,
+    14.30588013
+  ],
+  "grade": "K9",
+  "bizno": "8498600603",
+  "name": "(주)한국어음중개",
+  "request_id": 1
 }
 ```
 
@@ -89,7 +95,11 @@ Parameter | Default | Description
 Property | Description
 --------- | -----------
 request_id | 요청 ID. 증분식(incremental)
-yield | 할인율. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key)
+bizno | 사업자번호
+name | 사명
+grade | 나인티데이즈 등급
+yield | 할인율 범위. index(0:최소할인율, 1:최대할인율)
+
 
 <aside class="info">
 조회할 발행사가 2개 이상이라면 아래의 할인율 일괄조회가 더 유리합니다.
@@ -102,20 +112,70 @@ curl "http://api1.kross.kr/preview_yields"
   -X POST
   -H "Authorization: e71829c351aa4242c2719cbfbe671c09"
   -H "Content-Type: application/json"
-  -d '{"owner":"6088107131", "publishers":["8498600603","4358600710"]}'
+  -d '{
+        "owner":"8498600603",
+        "publishers": [
+          {
+            "bizno":"3138102806",
+            "amount": 20000000,
+            "ex_date": "2017-12-30"
+          },
+          {
+            "bizno":"5088100901",
+            "amount": 10000000,
+            "ex_date": "2018-01-20"
+          }
+        ]
+      }'
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "owner": "6088107131",
-  "yields": {
-    [
-      ["8498600603", 8.451, 10.102, "a4242c2719cb", "http://90days.kr/inb/6088107131?referrer_key=8498600603"],
-      ["4358600710", 9.989, 12.014, "7bce93e17bca", "http://90days.kr/inb/6088107131?referrer_key=4358600710"]
+    "owner": "8498600603",
+    "publishers": [
+        {
+            "amount": 20000000,
+            "bizno": "3138102806",
+            "remain_days": 87
+        },
+        {
+            "amount": 10000000,
+            "bizno": "5088100901",
+            "remain_days": 42
+        }
+    ],
+    "output": [
+        {
+            "yield": [
+                11.05148013,
+                14.30588013
+            ],
+            "remain_days": 87,
+            "discount_amount": [
+                19470000,
+                19310000
+            ],
+            "bizno": "3138102806",
+            "referrer_key": "fc888dfb5a47f72626a5fa28ada1b04b",
+            "grade": "K9"
+        },
+        {
+            "yield": [
+                13.063188,
+                16.548588
+            ],
+            "remain_days": 42,
+            "discount_amount": [
+                9840000,
+                9800000
+            ],
+            "bizno": "5088100901",
+            "referrer_key": "f8742216bc9125787ffe816c0d7f9bde",
+            "grade": "K10"
+        }
     ]
-  }
 }
 ```
 
@@ -131,7 +191,10 @@ curl "http://api1.kross.kr/preview_yields"
 Parameter | Description
 --------- | -----------
 owner | 어음 소지인 사업자번호
-publishers | 조회할 발행사 사업자번호들 (array)
+publishers | 조회할 발행사 어음정보들 (array)
+publishers.bizno | 발행사 사업자번호
+publishers.amount | 어음 발행 금액
+publishers.ex_date | 어음만기일 ex) "2017-10-30"
 
 
 ### Output Structures
@@ -139,7 +202,14 @@ publishers | 조회할 발행사 사업자번호들 (array)
 Property | Description
 --------- | -----------
 owner | 어음소지자 사업자번호
-yields | 발행사별 할인율. array. index(0:발행사 사업자번호, 1:최소할인율, 2:최대할인율, 3:Referrer_Key, 4:할인의뢰Link)
-
+publishers | 조회한 발행사 어음정보들 (array)
+output | 조회 결과
+output.bizno | 사업자번호
+output.remain_days | 잔존일수
+output.bizno | KROSS 평가등급
+output.yield | 할인율 범위 (0:최소할인율, 1:최대할인율)
+output.discount_amount | 할인금액 범위 (0:최소할인금액, 1:최대할인금액)
+output.referrer_key | Referrer_Key
+output.link | 할인의뢰 Link URL
 
 
