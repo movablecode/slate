@@ -113,19 +113,24 @@ curl "http://api1.kross.kr/preview_yields"
   -H "Authorization: e71829c351aa4242c2719cbfbe671c09"
   -H "Content-Type: application/json"
   -d '{
-        "owner":"8498600603",
-        "publishers": [
-          {
-            "bizno":"3138102806",
-            "amount": 20000000,
-            "ex_date": "2017-12-30"
-          },
-          {
-            "bizno":"5088100901",
-            "amount": 10000000,
-            "ex_date": "2018-01-20"
-          }
-        ]
+          "owner":"8498600603",
+          "publishers": [
+            {
+              "bizno":"3138102806",
+              "amount": 20000000,
+              "ex_date": "2017-12-30"
+            },
+            {
+              "bizno":"5088100901",
+              "amount": 10000000,
+              "ex_date": "2018-01-20"
+            },
+            {
+              "bizno":"8498600603",
+              "amount": 10000000,
+              "ex_date": "2018-01-20"
+            }
+          ]
       }'
 ```
 
@@ -134,46 +139,45 @@ curl "http://api1.kross.kr/preview_yields"
 ```json
 {
     "owner": "8498600603",
-    "publishers": [
-        {
-            "amount": 20000000,
-            "bizno": "3138102806",
-            "remain_days": 87
-        },
-        {
-            "amount": 10000000,
-            "bizno": "5088100901",
-            "remain_days": 42
-        }
-    ],
     "output": [
         {
+            "ex_date": "2017-12-30",
+            "amount": 20000000,
+            "bizno": "3138102806",
+            "referrer_key": "fc888dfb5a47f72626a5fa28ada1b04b:KX8vV3HdRmPJ3",
             "yield": [
                 11.05148013,
                 14.30588013
             ],
-            "remain_days": 87,
+            "grade": "K9",
+            "link": "https://90days.kr/inb/fc888dfb5a47f72626a5fa28ada1b04b:KX8vV3HdRmPJ3",
+            "remain_days": 59,
             "discount_amount": [
-                19470000,
-                19310000
-            ],
-            "bizno": "3138102806",
-            "referrer_key": "fc888dfb5a47f72626a5fa28ada1b04b",
-            "grade": "K9"
+                19640000,
+                19530000
+            ]
         },
         {
+            "ex_date": "2018-01-20",
+            "amount": 10000000,
+            "bizno": "5088100901",
+            "referrer_key": "f8742216bc9125787ffe816c0d7f9bde:R2PDmGT0RzXGY",
             "yield": [
                 13.063188,
                 16.548588
             ],
-            "remain_days": 42,
+            "grade": "K10",
+            "link": "https://90days.kr/inb/f8742216bc9125787ffe816c0d7f9bde:R2PDmGT0RzXGY",
+            "remain_days": 80,
             "discount_amount": [
-                9840000,
-                9800000
-            ],
-            "bizno": "5088100901",
-            "referrer_key": "f8742216bc9125787ffe816c0d7f9bde",
-            "grade": "K10"
+                9710000,
+                9630000
+            ]
+        },
+        {
+            "bizno": "8498600603",
+            "message": "평가정보가 없는 사업자번호입니다.",
+            "error": 404
         }
     ]
 }
@@ -202,11 +206,12 @@ publishers.ex_date | 어음만기일 ex) "2017-10-30" | string
 Property | Description | Type
 --------- | ----------- | -------
 owner | 어음소지자 사업자번호 | string
-publishers | 조회한 발행사 어음정보들 | array of object
 output | 조회 결과 | array of object
 output.bizno | 사업자번호 | string
 output.remain_days | 잔존일수 | integer
 output.bizno | KROSS 평가등급 | string
+output.amount | 어음 발행 금액 | double
+output.ex_date | 어음만기일 ex) "2017-10-30" | string
 output.yield | 할인율 범위 (0:최소할인율, 1:최대할인율) | array of double
 output.discount_amount | 할인금액 범위 (0:최소할인금액, 1:최대할인금액) | array of double
 output.referrer_key | Referrer_Key | string
